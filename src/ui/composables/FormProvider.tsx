@@ -102,10 +102,9 @@
 // }
 
 import { z } from 'zod';
-import { DeepPartial, DefaultValues, FieldErrors, FormProvider, useForm, SubmitErrorHandler } from 'react-hook-form';
+import { DeepPartial, DefaultValues, FieldErrors, FormProvider, useForm, SubmitErrorHandler, Form } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
-import { Form } from '@/components/Form';
 
 // Definimos un tipo auxiliar para DeepPartial que trabaje mejor con Zod
 type DeepPartialWithZod<T extends z.ZodObject<any, any>> = {

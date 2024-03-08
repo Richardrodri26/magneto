@@ -1,0 +1,87 @@
+mutation SignIn($signInInput: SigninInput!) {
+  signIn(signInInput: $signInInput) {
+    token
+    user {
+      ...userFragment
+    }
+  }
+}
+
+
+fragment userFragment on User {
+  id
+  createdAt
+  updatedAt
+  deletedAt
+  camundaId
+  firstName
+  lastName
+  email
+  identificationType
+  identificationNumber
+  dateIssue
+  phoneNumber
+  status
+  phoneVerification
+  emailVerification
+  type
+  organization {
+    id
+    createdAt
+    updatedAt
+    deletedAt
+    name
+  }
+  userRoles {
+    id
+    createdAt
+    updatedAt
+    deletedAt
+    name
+    description
+    defaultForType
+    users {
+      id
+      createdAt
+      updatedAt
+      deletedAt
+      camundaId
+      firstName
+      lastName
+      email
+      identificationType
+      identificationNumber
+      dateIssue
+      phoneNumber
+      status
+      phoneVerification
+      emailVerification
+      type
+      fullName
+    }
+    roleFx {
+      id
+      createdAt
+      updatedAt
+      deletedAt
+      permission
+    }
+  }
+  userRolesFx {
+    id
+    createdAt
+    updatedAt
+    deletedAt
+    permission
+    role {
+      id
+      createdAt
+      updatedAt
+      deletedAt
+      name
+      description
+      defaultForType
+    }
+  }
+  fullName
+}
