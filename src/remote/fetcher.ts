@@ -1,5 +1,4 @@
-import { getUserToken } from '@/utils';
-import { getCookies, hasCookie } from 'cookies-next'
+import { getCookie, hasCookie } from 'cookies-next'
 
 
 type FetchOptions = {
@@ -22,6 +21,19 @@ type FetchOptions = {
   ) => {
     return async (): Promise<TData> => {
       const { next, cache, ...restOptions } = options || {};
+
+      let userToken = "";
+
+      if (typeof window === "undefined") {
+        const { cookies } = await import("next/headers")
+        const userTokenServer = getCookie(process.env.NEXT_PUBLIC_USER_TOKEN!, { cookies }) as string | undefined
+
+        userToken = userTokenServer || ""
+      } else  {
+        const userTokenClient = getCookie(process.env.NEXT_PUBLIC_USER_TOKEN!) as string | undefined
+        userToken = userTokenClient || ""
+      }
+
       const res = await fetch(
         `${backendUrl}graphql`,
         {
@@ -32,7 +44,8 @@ type FetchOptions = {
 
 
             // "Authorization": `Bearer ${getUserToken() || ""}`,
-            "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJrb3Vkc2lAY29tZXJjaWFsaXphZG9yYS1zMy5jb20iLCJmaXJzdE5hbWUiOiJzdXBlciBhZG1pbiIsImxhc3ROYW1lIjpudWxsLCJpZGVudGlmaWNhdGlvblR5cGUiOm51bGwsImlkZW50aWZpY2F0aW9uTnVtYmVyIjpudWxsLCJoYXNBdXRob3JpemVkIjp0cnVlLCJvcmdhbml6YXRpb24iOm51bGwsImlhdCI6MTcwOTk1NDYyMCwiZXhwIjoxNzEwMDQxMDIwfQ.OJDlQXcYaXSNKw5XxJ004ArXmX-2mPMJE90TkRlVwfE`,
+            // "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJrb3Vkc2lAY29tZXJjaWFsaXphZG9yYS1zMy5jb20iLCJmaXJzdE5hbWUiOiJzdXBlciBhZG1pbiIsImxhc3ROYW1lIjpudWxsLCJpZGVudGlmaWNhdGlvblR5cGUiOm51bGwsImlkZW50aWZpY2F0aW9uTnVtYmVyIjpudWxsLCJoYXNBdXRob3JpemVkIjp0cnVlLCJvcmdhbml6YXRpb24iOm51bGwsImlhdCI6MTcwOTk1NDYyMCwiZXhwIjoxNzEwMDQxMDIwfQ.OJDlQXcYaXSNKw5XxJ004ArXmX-2mPMJE90TkRlVwfE`,
+            "Authorization": `Bearer ${userToken}`,
             // "Authorization": `Bearer ${getCookies()[process.env.NEXT_PUBLIC_USER_TOKEN!] || ""}`,
             "apiKey": apiKey!
           },
