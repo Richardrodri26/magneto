@@ -2,20 +2,94 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-
-  --app-height: calc(100dvh - 112px);
-  --app-height-no-tab: calc(100dvh - 60px);
-  
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 224 71.4% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+    --primary: 262.1 83.3% 57.8%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220.9 39.3% 11%;
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 220.9 39.3% 11%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 262.1 83.3% 57.8%;
+    --radius: 0.5rem;
+    --app-height: calc(100dvh - 112px);
+    --app-height-no-tab: calc(100dvh - 60px);
+  }
 }
 
+
+.private__layout__container {
+  display: grid;
+
+  grid-template-rows: 60px minmax(50px, 52px) 1fr;
+  grid-template-columns: 72px repeat(4, 1fr);
+
+  grid-template-areas:
+    'header header header header header'
+    'Tab Tab Tab Tab Tab'
+    /* 'sidebar main-content main-content main-content main-content' */
+    'sidebar main-content main-content main-content main-content';
+
+  height: 100%;
+
+  @apply min-h-screen bg-[#F2F2F2];
+}
+
+.util__scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.util__scroll::-webkit-scrollbar-track {
+  /*--- custome ---*/
+  background: #d9d9d9;
+  border-radius: 9999px;
+}
+
+.util__scroll::-webkit-scrollbar-thumb {
+  background: #bababa;
+  border-radius: 9999px;
+}
+
+.util__scroll::-webkit-scrollbar-thumb:hover {
+  background: #bababa;
+}
 
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.card {
+  @apply px-4 py-[4px] rounded-[10px]
+}
+
+.loader {
+  background: '#f3f3f3';
+  position: 'relative';
+  overflow: 'hidden';
+}
+
+.loader::before {
+  content: '""';
+  position: 'absolute';
+  top: '0';
+  left: '-100%';
+  width: '100%';
+  height: '100%';
+  background: 'linear-gradient(to right, #f3f3f3, #e0e0e0, #f3f3f3)';
+  animation: 'loading 1.5s linear infinite';
 }

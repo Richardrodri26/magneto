@@ -1,4 +1,4 @@
-import { useMutation, UseMutationOptions } from '@tanstack/react-query';
+import { useMutation, useQuery, useSuspenseQuery, UseMutationOptions, UseQueryOptions, UseSuspenseQueryOptions } from '@tanstack/react-query';
 import { fetcher } from './fetcher';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -2616,6 +2616,28 @@ export type SignInMutation = { __typename?: 'Mutation', signIn: { __typename?: '
 
 export type UserFragmentFragment = { __typename?: 'User', id: string, createdAt: any, updatedAt: any, deletedAt?: any | null, camundaId?: string | null, firstName?: string | null, lastName?: string | null, email: string, identificationType?: UserDocumentTypes | null, identificationNumber?: string | null, dateIssue?: any | null, phoneNumber?: string | null, status: UserStatusTypes, phoneVerification: boolean, emailVerification: boolean, type: UserTypes, fullName: string, organization?: { __typename?: 'Organization', id: string, createdAt: any, updatedAt: any, deletedAt?: any | null, name: string } | null, userRoles: Array<{ __typename?: 'Role', id: string, createdAt: any, updatedAt: any, deletedAt?: any | null, name: string, description: string, defaultForType?: UserTypes | null, users?: Array<{ __typename?: 'User', id: string, createdAt: any, updatedAt: any, deletedAt?: any | null, camundaId?: string | null, firstName?: string | null, lastName?: string | null, email: string, identificationType?: UserDocumentTypes | null, identificationNumber?: string | null, dateIssue?: any | null, phoneNumber?: string | null, status: UserStatusTypes, phoneVerification: boolean, emailVerification: boolean, type: UserTypes, fullName: string }> | null, roleFx: Array<{ __typename?: 'RoleFx', id: string, createdAt: any, updatedAt: any, deletedAt?: any | null, permission: string }> }>, userRolesFx: Array<{ __typename?: 'RoleFx', id: string, createdAt: any, updatedAt: any, deletedAt?: any | null, permission: string, role?: { __typename?: 'Role', id: string, createdAt: any, updatedAt: any, deletedAt?: any | null, name: string, description: string, defaultForType?: UserTypes | null } | null }> };
 
+export type PastelGraphicQueryVariables = Exact<{
+  pastelGraphicInput: PastelGraphicInput;
+}>;
+
+
+export type PastelGraphicQuery = { __typename?: 'Query', pastelGraphic: { __typename?: 'PastelGraphic', pastelGraphicAbsolute?: { __typename?: 'PastelGraphicAbsolute', expired?: number | null, inProgress?: number | null, resolved?: number | null, total?: number | null } | null, pastelGraphicRelative?: { __typename?: 'PastelGraphicRelative', expired?: string | null, inProgress?: string | null, resolved?: string | null, total?: string | null } | null } };
+
+export type FrequencyPolygonGraphicQueryVariables = Exact<{
+  frequencyPolygonGraphicInput: FrequencyPolygonGraphicInput;
+}>;
+
+
+export type FrequencyPolygonGraphicQuery = { __typename?: 'Query', frequencyPolygonGraphic: Array<{ __typename?: 'FrequencyPolygon', key?: string | null, currentDate?: number | null, lastDate?: number | null }> };
+
+export type TaskListsByProcessDefinitionQueryVariables = Exact<{
+  definitionKey: Scalars['String']['input'];
+  unfinished?: InputMaybe<Scalars['Boolean']['input']>;
+}>;
+
+
+export type TaskListsByProcessDefinitionQuery = { __typename?: 'Query', taskListsByProcessDefinition: Array<{ __typename?: 'TaskListVariables', id?: string | null, name?: string | null, description?: string | null, owner?: string | null, priority?: number | null, assignee?: string | null, followUp?: string | null, due?: string | null, processDefinitionId?: string | null, processInstanceId?: string | null, startTime?: string | null, commentsNumber?: number | null, attachmentNumber?: number | null, processDefinitionName?: string | null, endTime?: string | null, clout?: number | null, hasShowVariables?: any | null, variablesValues?: any | null, taskTrayId?: string | null }> };
+
 
 export const UserFragmentFragmentDoc = `
     fragment userFragment on User {
@@ -2722,3 +2744,180 @@ export const useSignInMutation = <
 
 
 useSignInMutation.fetcher = (variables: SignInMutationVariables, options?: RequestInit['headers']) => fetcher<SignInMutation, SignInMutationVariables>(SignInDocument, variables, options);
+
+export const PastelGraphicDocument = `
+    query PastelGraphic($pastelGraphicInput: PastelGraphicInput!) {
+  pastelGraphic(pastelGraphicInput: $pastelGraphicInput) {
+    pastelGraphicAbsolute {
+      expired
+      inProgress
+      resolved
+      total
+    }
+    pastelGraphicRelative {
+      expired
+      inProgress
+      resolved
+      total
+    }
+  }
+}
+    `;
+
+export const usePastelGraphicQuery = <
+      TData = PastelGraphicQuery,
+      TError = unknown
+    >(
+      variables: PastelGraphicQueryVariables,
+      options?: Omit<UseQueryOptions<PastelGraphicQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<PastelGraphicQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<PastelGraphicQuery, TError, TData>(
+      {
+    queryKey: ['PastelGraphic', variables],
+    queryFn: fetcher<PastelGraphicQuery, PastelGraphicQueryVariables>(PastelGraphicDocument, variables),
+    ...options
+  }
+    )};
+
+usePastelGraphicQuery.getKey = (variables: PastelGraphicQueryVariables) => ['PastelGraphic', variables];
+
+export const useSuspensePastelGraphicQuery = <
+      TData = PastelGraphicQuery,
+      TError = unknown
+    >(
+      variables: PastelGraphicQueryVariables,
+      options?: Omit<UseSuspenseQueryOptions<PastelGraphicQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<PastelGraphicQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useSuspenseQuery<PastelGraphicQuery, TError, TData>(
+      {
+    queryKey: ['PastelGraphicSuspense', variables],
+    queryFn: fetcher<PastelGraphicQuery, PastelGraphicQueryVariables>(PastelGraphicDocument, variables),
+    ...options
+  }
+    )};
+
+useSuspensePastelGraphicQuery.getKey = (variables: PastelGraphicQueryVariables) => ['PastelGraphicSuspense', variables];
+
+
+usePastelGraphicQuery.fetcher = (variables: PastelGraphicQueryVariables, options?: RequestInit['headers']) => fetcher<PastelGraphicQuery, PastelGraphicQueryVariables>(PastelGraphicDocument, variables, options);
+
+export const FrequencyPolygonGraphicDocument = `
+    query FrequencyPolygonGraphic($frequencyPolygonGraphicInput: FrequencyPolygonGraphicInput!) {
+  frequencyPolygonGraphic(
+    frequencyPolygonGraphicInput: $frequencyPolygonGraphicInput
+  ) {
+    key
+    currentDate
+    lastDate
+  }
+}
+    `;
+
+export const useFrequencyPolygonGraphicQuery = <
+      TData = FrequencyPolygonGraphicQuery,
+      TError = unknown
+    >(
+      variables: FrequencyPolygonGraphicQueryVariables,
+      options?: Omit<UseQueryOptions<FrequencyPolygonGraphicQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<FrequencyPolygonGraphicQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<FrequencyPolygonGraphicQuery, TError, TData>(
+      {
+    queryKey: ['FrequencyPolygonGraphic', variables],
+    queryFn: fetcher<FrequencyPolygonGraphicQuery, FrequencyPolygonGraphicQueryVariables>(FrequencyPolygonGraphicDocument, variables),
+    ...options
+  }
+    )};
+
+useFrequencyPolygonGraphicQuery.getKey = (variables: FrequencyPolygonGraphicQueryVariables) => ['FrequencyPolygonGraphic', variables];
+
+export const useSuspenseFrequencyPolygonGraphicQuery = <
+      TData = FrequencyPolygonGraphicQuery,
+      TError = unknown
+    >(
+      variables: FrequencyPolygonGraphicQueryVariables,
+      options?: Omit<UseSuspenseQueryOptions<FrequencyPolygonGraphicQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<FrequencyPolygonGraphicQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useSuspenseQuery<FrequencyPolygonGraphicQuery, TError, TData>(
+      {
+    queryKey: ['FrequencyPolygonGraphicSuspense', variables],
+    queryFn: fetcher<FrequencyPolygonGraphicQuery, FrequencyPolygonGraphicQueryVariables>(FrequencyPolygonGraphicDocument, variables),
+    ...options
+  }
+    )};
+
+useSuspenseFrequencyPolygonGraphicQuery.getKey = (variables: FrequencyPolygonGraphicQueryVariables) => ['FrequencyPolygonGraphicSuspense', variables];
+
+
+useFrequencyPolygonGraphicQuery.fetcher = (variables: FrequencyPolygonGraphicQueryVariables, options?: RequestInit['headers']) => fetcher<FrequencyPolygonGraphicQuery, FrequencyPolygonGraphicQueryVariables>(FrequencyPolygonGraphicDocument, variables, options);
+
+export const TaskListsByProcessDefinitionDocument = `
+    query TaskListsByProcessDefinition($definitionKey: String!, $unfinished: Boolean) {
+  taskListsByProcessDefinition(
+    definitionKey: $definitionKey
+    unfinished: $unfinished
+  ) {
+    id
+    name
+    description
+    owner
+    priority
+    assignee
+    followUp
+    due
+    processDefinitionId
+    processInstanceId
+    startTime
+    commentsNumber
+    attachmentNumber
+    processDefinitionName
+    endTime
+    clout
+    hasShowVariables
+    variablesValues
+    taskTrayId
+  }
+}
+    `;
+
+export const useTaskListsByProcessDefinitionQuery = <
+      TData = TaskListsByProcessDefinitionQuery,
+      TError = unknown
+    >(
+      variables: TaskListsByProcessDefinitionQueryVariables,
+      options?: Omit<UseQueryOptions<TaskListsByProcessDefinitionQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<TaskListsByProcessDefinitionQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<TaskListsByProcessDefinitionQuery, TError, TData>(
+      {
+    queryKey: ['TaskListsByProcessDefinition', variables],
+    queryFn: fetcher<TaskListsByProcessDefinitionQuery, TaskListsByProcessDefinitionQueryVariables>(TaskListsByProcessDefinitionDocument, variables),
+    ...options
+  }
+    )};
+
+useTaskListsByProcessDefinitionQuery.getKey = (variables: TaskListsByProcessDefinitionQueryVariables) => ['TaskListsByProcessDefinition', variables];
+
+export const useSuspenseTaskListsByProcessDefinitionQuery = <
+      TData = TaskListsByProcessDefinitionQuery,
+      TError = unknown
+    >(
+      variables: TaskListsByProcessDefinitionQueryVariables,
+      options?: Omit<UseSuspenseQueryOptions<TaskListsByProcessDefinitionQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<TaskListsByProcessDefinitionQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useSuspenseQuery<TaskListsByProcessDefinitionQuery, TError, TData>(
+      {
+    queryKey: ['TaskListsByProcessDefinitionSuspense', variables],
+    queryFn: fetcher<TaskListsByProcessDefinitionQuery, TaskListsByProcessDefinitionQueryVariables>(TaskListsByProcessDefinitionDocument, variables),
+    ...options
+  }
+    )};
+
+useSuspenseTaskListsByProcessDefinitionQuery.getKey = (variables: TaskListsByProcessDefinitionQueryVariables) => ['TaskListsByProcessDefinitionSuspense', variables];
+
+
+useTaskListsByProcessDefinitionQuery.fetcher = (variables: TaskListsByProcessDefinitionQueryVariables, options?: RequestInit['headers']) => fetcher<TaskListsByProcessDefinitionQuery, TaskListsByProcessDefinitionQueryVariables>(TaskListsByProcessDefinitionDocument, variables, options);

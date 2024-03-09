@@ -102,9 +102,10 @@
 // }
 
 import { z } from 'zod';
-import { DeepPartial, DefaultValues, FieldErrors, FormProvider, useForm, SubmitErrorHandler, Form } from 'react-hook-form';
+import { DeepPartial, DefaultValues, FieldErrors, FormProvider, useForm, SubmitErrorHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
+import { Form } from '../components/Form';
 
 // Definimos un tipo auxiliar para DeepPartial que trabaje mejor con Zod
 type DeepPartialWithZod<T extends z.ZodObject<any, any>> = {
@@ -121,7 +122,7 @@ interface ISubmitModulesForm<T extends z.ZodObject<any, any> = z.ZodObject<any, 
   className?: string;
 }
 
-export function BasicFormProvider<T extends z.ZodObject<any, any>>({ children, submit, onError, defaultValue, values, schema, className }: ISubmitModulesForm<T>) {
+export function BasicFormProvider<T extends z.ZodObject<any, any>>({ children, submit, onError, defaultValue, values, schema, className = 'p-10' }: ISubmitModulesForm<T>) {
   // hooks
   const currentMethods = useForm({
     defaultValues: defaultValue,
@@ -131,10 +132,11 @@ export function BasicFormProvider<T extends z.ZodObject<any, any>>({ children, s
   });
 
   return (
-    <Form {...currentMethods}>
-      <form onSubmit={submit ? currentMethods.handleSubmit(data => submit(data), onError) : undefined} className={className}>
-        <FormProvider {...currentMethods}>{children}</FormProvider>
-      </form>
-    </Form>
+    <form onSubmit={submit ? currentMethods.handleSubmit(data => submit(data), onError) : undefined} className={className}>
+      {/* <FormProvider {...currentMethods}>{children}</FormProvider> */}
+      <Form  {...currentMethods}>
+        {children}
+      </Form>
+    </form>
   );
 }

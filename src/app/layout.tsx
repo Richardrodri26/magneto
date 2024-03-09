@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={workSans.className}>
+      <body className={`${workSans.className} antialiased util__scroll`}>
         <Providers>{children}</Providers>
       </body>
     </html>

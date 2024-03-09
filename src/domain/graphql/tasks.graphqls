@@ -1,0 +1,56 @@
+# Graphics
+
+query PastelGraphic($pastelGraphicInput: PastelGraphicInput!) {
+  pastelGraphic(pastelGraphicInput: $pastelGraphicInput) {
+    pastelGraphicAbsolute {
+      expired
+      inProgress
+      resolved
+      total
+    }
+    pastelGraphicRelative {
+      expired
+      inProgress
+      resolved
+      total
+    }
+  }
+}
+
+query FrequencyPolygonGraphic($frequencyPolygonGraphicInput: FrequencyPolygonGraphicInput!) {
+  frequencyPolygonGraphic(frequencyPolygonGraphicInput: $frequencyPolygonGraphicInput) {
+    key
+    currentDate
+    lastDate
+  }
+}
+
+# Graphics
+
+query TaskListsByProcessDefinition($definitionKey: String!, $unfinished: Boolean) {
+  taskListsByProcessDefinition(definitionKey: $definitionKey, unfinished: $unfinished) {
+    id
+    name
+    description
+    owner
+    priority
+    assignee
+    followUp
+    due
+    processDefinitionId
+    processInstanceId
+
+    startTime
+
+    commentsNumber
+    attachmentNumber
+    processDefinitionName
+    endTime
+
+    clout
+    hasShowVariables
+    variablesValues
+    taskTrayId
+  }
+}
+

@@ -20,12 +20,14 @@ import {
   Switch,
   Textarea,
 } from "../components";
+import { cn } from "@/lib/utils";
 
 type InputFormBasicType = {
   name: string;
   placeholder?: string;
   label?: string;
   description?: string | React.ReactNode;
+  className?: string;
 };
 
 interface InputFormInterface extends InputFormBasicType {}
@@ -35,6 +37,7 @@ export const InputForm = ({
   label,
   placeholder,
   description,
+  className,
 }: InputFormInterface) => {
   const { control } = useFormContext();
 
@@ -43,7 +46,7 @@ export const InputForm = ({
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className={cn("w-full", className)}>
           <FormLabel>{label}</FormLabel>
           <FormControl>
             <Input placeholder={placeholder} {...field} />
