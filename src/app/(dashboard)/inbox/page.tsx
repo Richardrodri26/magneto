@@ -1,4 +1,5 @@
 import { ServerLineChart } from '@/ui/features/dashboard/LineChart'
+import { ServerSidePieChart } from '@/ui/features/dashboard/PieChart'
 import React, { Suspense } from 'react'
 
 const InboxPage = async () => {
@@ -9,7 +10,7 @@ const InboxPage = async () => {
 
       <div className='card col-start-1 col-end-2 min-h-80 bg-white'>
         <Suspense fallback={<div className='w-full h-full loader' />} >
-          <div>Circular </div>
+          <ServerSidePieChart definitionKey='PQRS' />
         </Suspense>
       </div>
 
