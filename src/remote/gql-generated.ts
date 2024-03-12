@@ -2630,6 +2630,13 @@ export type FrequencyPolygonGraphicQueryVariables = Exact<{
 
 export type FrequencyPolygonGraphicQuery = { __typename?: 'Query', frequencyPolygonGraphic: Array<{ __typename?: 'FrequencyPolygon', key?: string | null, currentDate?: number | null, lastDate?: number | null }> };
 
+export type CalendarDataQueryVariables = Exact<{
+  calendarDataInput: CalendarDataInput;
+}>;
+
+
+export type CalendarDataQuery = { __typename?: 'Query', calendarData: Array<{ __typename?: 'TaskListBase', id: string, name?: string | null, description?: string | null, due?: string | null }> };
+
 export type TaskListsByProcessDefinitionQueryVariables = Exact<{
   definitionKey: Scalars['String']['input'];
   unfinished?: InputMaybe<Scalars['Boolean']['input']>;
@@ -2853,6 +2860,56 @@ useSuspenseFrequencyPolygonGraphicQuery.getKey = (variables: FrequencyPolygonGra
 
 
 useFrequencyPolygonGraphicQuery.fetcher = (variables: FrequencyPolygonGraphicQueryVariables, options?: RequestInit['headers']) => fetcher<FrequencyPolygonGraphicQuery, FrequencyPolygonGraphicQueryVariables>(FrequencyPolygonGraphicDocument, variables, options);
+
+export const CalendarDataDocument = `
+    query CalendarData($calendarDataInput: CalendarDataInput!) {
+  calendarData(calendarDataInput: $calendarDataInput) {
+    id
+    name
+    description
+    due
+  }
+}
+    `;
+
+export const useCalendarDataQuery = <
+      TData = CalendarDataQuery,
+      TError = unknown
+    >(
+      variables: CalendarDataQueryVariables,
+      options?: Omit<UseQueryOptions<CalendarDataQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<CalendarDataQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<CalendarDataQuery, TError, TData>(
+      {
+    queryKey: ['CalendarData', variables],
+    queryFn: fetcher<CalendarDataQuery, CalendarDataQueryVariables>(CalendarDataDocument, variables),
+    ...options
+  }
+    )};
+
+useCalendarDataQuery.getKey = (variables: CalendarDataQueryVariables) => ['CalendarData', variables];
+
+export const useSuspenseCalendarDataQuery = <
+      TData = CalendarDataQuery,
+      TError = unknown
+    >(
+      variables: CalendarDataQueryVariables,
+      options?: Omit<UseSuspenseQueryOptions<CalendarDataQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<CalendarDataQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useSuspenseQuery<CalendarDataQuery, TError, TData>(
+      {
+    queryKey: ['CalendarDataSuspense', variables],
+    queryFn: fetcher<CalendarDataQuery, CalendarDataQueryVariables>(CalendarDataDocument, variables),
+    ...options
+  }
+    )};
+
+useSuspenseCalendarDataQuery.getKey = (variables: CalendarDataQueryVariables) => ['CalendarDataSuspense', variables];
+
+
+useCalendarDataQuery.fetcher = (variables: CalendarDataQueryVariables, options?: RequestInit['headers']) => fetcher<CalendarDataQuery, CalendarDataQueryVariables>(CalendarDataDocument, variables, options);
 
 export const TaskListsByProcessDefinitionDocument = `
     query TaskListsByProcessDefinition($definitionKey: String!, $unfinished: Boolean) {

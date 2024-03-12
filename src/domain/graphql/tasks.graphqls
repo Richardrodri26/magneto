@@ -25,6 +25,16 @@ query FrequencyPolygonGraphic($frequencyPolygonGraphicInput: FrequencyPolygonGra
   }
 }
 
+query CalendarData($calendarDataInput: CalendarDataInput!) {
+  calendarData(calendarDataInput: $calendarDataInput) {
+    id
+    name
+    description
+    due
+  }
+}
+
+
 # Graphics
 
 query TaskListsByProcessDefinition($definitionKey: String!, $unfinished: Boolean) {

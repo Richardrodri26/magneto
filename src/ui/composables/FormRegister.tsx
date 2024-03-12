@@ -9,8 +9,13 @@ import {
   FormMessage,
 } from "../components/Form";
 import {
+  Button,
+  Calendar,
   Checkbox,
   Input,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
   RadioGroup,
   RadioGroupItem,
   Select,
@@ -22,6 +27,8 @@ import {
   Textarea,
 } from "../components";
 import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
 
 type InputFormBasicType = {
   name: string;
@@ -31,7 +38,7 @@ type InputFormBasicType = {
   className?: string;
 };
 
-interface InputFormInterface extends InputFormBasicType {}
+interface InputFormInterface extends InputFormBasicType { }
 
 export const InputForm = ({
   name,
@@ -60,7 +67,7 @@ export const InputForm = ({
   );
 };
 
-interface CheckboxFormInterface extends InputFormBasicType {}
+interface CheckboxFormInterface extends InputFormBasicType { }
 
 export const CheckBoxForm = ({
   name,
@@ -139,7 +146,7 @@ export const RadioGroupItemForm = ({
   );
 };
 
-interface SelectFormInterface extends InputFormBasicType {}
+interface SelectFormInterface extends InputFormBasicType { }
 
 export const SelectForm = ({
   name,
@@ -174,7 +181,7 @@ export const SelectForm = ({
   );
 };
 
-interface SwitchFormInterface extends InputFormBasicType {}
+interface SwitchFormInterface extends InputFormBasicType { }
 
 export const SwitchForm = ({
   name,
@@ -201,7 +208,7 @@ export const SwitchForm = ({
   );
 };
 
-interface TextareaFormInterface extends InputFormBasicType {}
+interface TextareaFormInterface extends InputFormBasicType { }
 
 export const TextareaForm = ({
   name,
@@ -231,3 +238,56 @@ export const TextareaForm = ({
     />
   );
 };
+
+interface InputDateFormInterface extends InputFormBasicType { }
+
+export const InputDateForm = ({ name, className, description, label }: InputDateFormInterface) => {
+  const { control } = useFormContext();
+
+  return (
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem className={cn("flex flex-col", className)}>
+          <FormLabel>{label}</FormLabel>
+          <Popover>
+            <PopoverTrigger asChild>
+              <FormControl>
+                <Button
+                  variant={"outline"}
+                  className={cn(
+                    "w-[240px] pl-3 text-left font-normal",
+                    !field.value && "text-muted-foreground"
+                  )}
+                >
+                  {field.value ? (
+                    format(field.value, "PPP")
+                  ) : (
+                    <span>Pick a date</span>
+                  )}
+                  <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                </Button>
+              </FormControl>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="single"
+                selected={field.value}
+                onSelect={field.onChange}
+                disabled={(date) =>
+                  date > new Date() || date < new Date("1900-01-01")
+                }
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
+          <FormDescription>
+            {description}
+          </FormDescription>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  )
+}
