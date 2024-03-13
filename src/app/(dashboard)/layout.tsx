@@ -1,4 +1,5 @@
-import { AsideMenu, TabsContainer, TopBar } from '@/ui/composables';
+import { AsideMenu } from '@/ui/components';
+import { TabsContainer, TopBar } from '@/ui/composables';
 import React from 'react'
 
 interface IPrivateLayoutProps {

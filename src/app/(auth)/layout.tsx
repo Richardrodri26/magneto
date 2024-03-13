@@ -1,4 +1,5 @@
 import { montserrat } from "@/config/fonts";
+import Image from "next/image";
 import React from "react";
 
 interface IAuthLayoutProps {
@@ -38,7 +39,7 @@ const AuthLayout = ({ children }: IAuthLayoutProps) => {
             </p>
 
             {/* <img src="/LottieMagneto.gif" alt="magneto_logo" className='mb-2.5' /> */}
-            <img src="/magneto.svg" alt="magneto_logo" className="mb-2.5" />
+            <Image src="/magneto.svg" alt="magneto_logo" className="mb-2.5"  />
             <p className={`text-center text-zinc-800 text-xl font-medium leading-loose ${montserrat.className}`}>
               (Middleware para Arquitecturas de Gestión y Navegación Empresarial
               y Tecnológica Orquestada)

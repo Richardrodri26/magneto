@@ -1,0 +1,25 @@
+query MyUserTaskTrays {
+  myUserTaskTrays {
+    id
+    createdAt
+    updatedAt
+    deletedAt
+    shortTitle
+    longTitle
+    description
+    definitionKey
+    quantity
+    fileImage {
+      id
+      createdAt
+      updatedAt
+      deletedAt
+      fileName
+      fileExtension
+      fileMode
+      fileMongoId
+      url
+      downloadUrl
+    }
+  }
+}

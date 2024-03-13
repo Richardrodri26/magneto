@@ -629,7 +629,6 @@ export type HistoricAnswers = {
 
 export type HistoricProcessInstance = {
   __typename?: 'HistoricProcessInstance';
-  Estado?: Maybe<Scalars['String']['output']>;
   deleteReason?: Maybe<Scalars['String']['output']>;
   durationInMillis?: Maybe<Scalars['String']['output']>;
   endTime?: Maybe<Scalars['String']['output']>;
@@ -637,8 +636,10 @@ export type HistoricProcessInstance = {
   processDefinitionId?: Maybe<Scalars['String']['output']>;
   processDefinitionKey?: Maybe<Scalars['String']['output']>;
   processDefinitionName?: Maybe<Scalars['String']['output']>;
+  requestNumber?: Maybe<Scalars['String']['output']>;
   startTime?: Maybe<Scalars['String']['output']>;
   state?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
 };
 
 export type HistoricTaskList = {
@@ -1294,6 +1295,7 @@ export type PreviousFormInput = {
 export type ProcessDefinition = {
   __typename?: 'ProcessDefinition';
   camundaDefinitionKey?: Maybe<Scalars['String']['output']>;
+  code?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['DateTime']['output'];
   deletedAt?: Maybe<Scalars['DateTime']['output']>;
   id: Scalars['ID']['output'];
@@ -1425,6 +1427,7 @@ export type Query = {
   myInitiatedInstance: HistoricProcessInstance;
   myInitiatedInstances: Array<HistoricProcessInstance>;
   myUserTaskTrays: Array<TaskTrayQuantity>;
+  nofiticationConfigsByProfile: Array<NotificationConfig>;
   notification: Notification;
   notificationConfig: NotificationConfig;
   notificationConfigs: Array<NotificationConfig>;
@@ -1656,6 +1659,16 @@ export type QueryInitialFormEmptyArgs = {
 
 export type QueryMyInitiatedInstanceArgs = {
   myInitiatedInstanceInput: MyInitiatedInstanceInput;
+};
+
+
+export type QueryMyInitiatedInstancesArgs = {
+  pagination?: InputMaybe<Pagination>;
+};
+
+
+export type QueryNofiticationConfigsByProfileArgs = {
+  profileId: Scalars['ID']['input'];
 };
 
 
@@ -2239,6 +2252,7 @@ export type TaskListPartialFields = {
   priority?: Maybe<Scalars['Int']['output']>;
   processDefinitionId?: Maybe<Scalars['String']['output']>;
   processInstanceId?: Maybe<Scalars['String']['output']>;
+  requestNumber: Scalars['String']['output'];
   startTime?: Maybe<Scalars['String']['output']>;
   status?: Maybe<Scalars['String']['output']>;
   taskDefinitionKey?: Maybe<Scalars['String']['output']>;
@@ -2645,6 +2659,11 @@ export type TaskListsByProcessDefinitionQueryVariables = Exact<{
 
 export type TaskListsByProcessDefinitionQuery = { __typename?: 'Query', taskListsByProcessDefinition: Array<{ __typename?: 'TaskListVariables', id?: string | null, name?: string | null, description?: string | null, owner?: string | null, priority?: number | null, assignee?: string | null, followUp?: string | null, due?: string | null, processDefinitionId?: string | null, processInstanceId?: string | null, startTime?: string | null, commentsNumber?: number | null, attachmentNumber?: number | null, processDefinitionName?: string | null, endTime?: string | null, clout?: number | null, hasShowVariables?: any | null, variablesValues?: any | null, taskTrayId?: string | null }> };
 
+export type MyUserTaskTraysQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MyUserTaskTraysQuery = { __typename?: 'Query', myUserTaskTrays: Array<{ __typename?: 'TaskTrayQuantity', id: string, createdAt: any, updatedAt: any, deletedAt?: any | null, shortTitle: string, longTitle?: string | null, description?: string | null, definitionKey?: string | null, quantity?: number | null, fileImage?: { __typename?: 'FileInfo', id: string, createdAt: any, updatedAt: any, deletedAt?: any | null, fileName: string, fileExtension: string, fileMode: FileModes, fileMongoId: string, url: string, downloadUrl?: string | null } | null }> };
+
 
 export const UserFragmentFragmentDoc = `
     fragment userFragment on User {
@@ -2978,3 +2997,70 @@ useSuspenseTaskListsByProcessDefinitionQuery.getKey = (variables: TaskListsByPro
 
 
 useTaskListsByProcessDefinitionQuery.fetcher = (variables: TaskListsByProcessDefinitionQueryVariables, options?: RequestInit['headers']) => fetcher<TaskListsByProcessDefinitionQuery, TaskListsByProcessDefinitionQueryVariables>(TaskListsByProcessDefinitionDocument, variables, options);
+
+export const MyUserTaskTraysDocument = `
+    query MyUserTaskTrays {
+  myUserTaskTrays {
+    id
+    createdAt
+    updatedAt
+    deletedAt
+    shortTitle
+    longTitle
+    description
+    definitionKey
+    quantity
+    fileImage {
+      id
+      createdAt
+      updatedAt
+      deletedAt
+      fileName
+      fileExtension
+      fileMode
+      fileMongoId
+      url
+      downloadUrl
+    }
+  }
+}
+    `;
+
+export const useMyUserTaskTraysQuery = <
+      TData = MyUserTaskTraysQuery,
+      TError = unknown
+    >(
+      variables?: MyUserTaskTraysQueryVariables,
+      options?: Omit<UseQueryOptions<MyUserTaskTraysQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<MyUserTaskTraysQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<MyUserTaskTraysQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['MyUserTaskTrays'] : ['MyUserTaskTrays', variables],
+    queryFn: fetcher<MyUserTaskTraysQuery, MyUserTaskTraysQueryVariables>(MyUserTaskTraysDocument, variables),
+    ...options
+  }
+    )};
+
+useMyUserTaskTraysQuery.getKey = (variables?: MyUserTaskTraysQueryVariables) => variables === undefined ? ['MyUserTaskTrays'] : ['MyUserTaskTrays', variables];
+
+export const useSuspenseMyUserTaskTraysQuery = <
+      TData = MyUserTaskTraysQuery,
+      TError = unknown
+    >(
+      variables?: MyUserTaskTraysQueryVariables,
+      options?: Omit<UseSuspenseQueryOptions<MyUserTaskTraysQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<MyUserTaskTraysQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useSuspenseQuery<MyUserTaskTraysQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['MyUserTaskTraysSuspense'] : ['MyUserTaskTraysSuspense', variables],
+    queryFn: fetcher<MyUserTaskTraysQuery, MyUserTaskTraysQueryVariables>(MyUserTaskTraysDocument, variables),
+    ...options
+  }
+    )};
+
+useSuspenseMyUserTaskTraysQuery.getKey = (variables?: MyUserTaskTraysQueryVariables) => variables === undefined ? ['MyUserTaskTraysSuspense'] : ['MyUserTaskTraysSuspense', variables];
+
+
+useMyUserTaskTraysQuery.fetcher = (variables?: MyUserTaskTraysQueryVariables, options?: RequestInit['headers']) => fetcher<MyUserTaskTraysQuery, MyUserTaskTraysQueryVariables>(MyUserTaskTraysDocument, variables, options);

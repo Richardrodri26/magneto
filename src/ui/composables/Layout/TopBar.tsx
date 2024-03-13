@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 
 export const TopBar = () => {
@@ -26,7 +27,7 @@ export const TopBar = () => {
           {' '}
 
           <div className='p-1 rounded-full bg-white'>
-          <img className='w-7 h-7 rounded-ful' src='/neiva_iconpng.png' alt='entidad' />
+          <Image className='w-7 h-7 rounded-ful' src='/neiva_iconpng.png' alt='entidad' />
           </div>
            {/* {userInfo?.organization?.name} */}
            Usuario

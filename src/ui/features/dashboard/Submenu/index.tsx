@@ -1,19 +1,14 @@
-import { cn } from "@/lib/utils"
-import { ChevronRightCircle } from "lucide-react"
+import { useMyUserTaskTraysQuery } from "@/remote/gql-generated"
+import { serverPreFetch } from "@/remote/query-utils"
+import { HydrationBoundary, dehydrate } from "@tanstack/react-query"
+import { SubmenuTaskInbox } from "./ClientSubmenu"
 
 
-export const SubmenuTaskInbox = () => {
-  
+export const SubmenuTaskInboxServerHydration = async () => {
+  const queryClient = await serverPreFetch(useMyUserTaskTraysQuery)
   return (
-    <div
-        className='relative mt-3 flex h-[95%] w-[180px] flex-col items-start justify-start gap-2 border-r border-r-[#BABABA] py-4 pr-4 '>
-        {/* SubNavigationItem */}
-
-      
-
-        <div  className={cn('absolute -right-[11px] top-1 z-[3] h-[22px] w-[22px] cursor-pointer bg-[#F2F2F2] transition-all')}>
-          <ChevronRightCircle className='fill-[#8D8D8D] ' />
-        </div>
-      </div>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <SubmenuTaskInbox />
+    </HydrationBoundary>
   )
 }

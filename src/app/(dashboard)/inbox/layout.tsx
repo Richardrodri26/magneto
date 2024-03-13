@@ -1,4 +1,4 @@
-import { SubmenuTaskInbox } from "@/ui/features/dashboard";
+import { SubmenuTaskInboxServerHydration } from "@/ui/features/dashboard";
 
 export default function InboxLayout({
  children
@@ -7,7 +7,7 @@ export default function InboxLayout({
 }) {
   return (
     <div className='flex px-2'>
-      <SubmenuTaskInbox />
+      <SubmenuTaskInboxServerHydration />
 
       <div className='flex w-full flex-col pb-5 @container'>
         {children}

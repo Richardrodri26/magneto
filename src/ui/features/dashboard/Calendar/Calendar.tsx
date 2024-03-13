@@ -64,7 +64,7 @@ export const CalendarTaskWidget = ({ data }: ICalendarTaskWidget) => {
     const holidaysDates = holidaysCurrentYear.map(holiday => new Date(holiday.date));
 
     return holidaysDates;
-  }, [currentMonth.getFullYear()]);
+  }, [currentMonth]);
 
   if (!data) return <div className='loader h-80 w-full' />;
 
