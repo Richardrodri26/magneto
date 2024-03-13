@@ -66,7 +66,7 @@ export const CalendarTaskWidget = ({ data }: ICalendarTaskWidget) => {
     return holidaysDates;
   }, [currentMonth]);
 
-  if (!data) return <div className='loader h-80 w-full' />;
+  if (!data) return <div className='loader h-80 w-full rounded-md' />;
 
   const dueDates = groupDataByDate(data?.calendarData || []);
 

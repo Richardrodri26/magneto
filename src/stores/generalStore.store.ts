@@ -1,10 +1,24 @@
 "use client"
+import { INavRoute } from '@/domain/routes.config';
 import { User } from '@/remote/gql-generated';
 import { create, StateCreator } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer'
 import { shallow } from 'zustand/shallow';
 import { createWithEqualityFn } from 'zustand/traditional';
+
+export interface ITabItemProps {
+  url: string;
+  data: any;
+  title: string;
+
+  searchTag?: string
+
+  // TODO: Sacar el tipado de los iconos para recibir la key aqui
+  // icon?: IconKeys;
+  icon?: string;
+  
+}
 
 export type AlertTypes = 'success' | 'info' | 'error' | 'warning' | 'custom';
 interface IAlertContent {
@@ -26,10 +40,10 @@ export interface IModal {
 
 export interface IGeneral {
   isOpenMenu: boolean;
-  // tabs: ITabItemProps[];
+  tabs: ITabItemProps[];
 
-  // currentTab?: ITabItemProps;
-  // prevTab?: ITabItemProps;
+  currentTab?: ITabItemProps;
+  prevTab?: ITabItemProps;
 
   showGraphics: boolean;
   expandSubMenu: boolean;
@@ -42,30 +56,30 @@ export interface IGeneral {
 
   modalStatus?: IModal;
 
-  // firstTaskInbox?: INavRoute & { searchTag?: string };
+  firstTaskInbox?: INavRoute & { searchTag?: string };
 
   countErrorDashboard: number;
 }
 
 export interface IGeneralActions {
   setIsOpenMenu: (isOpen: boolean) => void;
-  // setTabs: (tabs: ITabItemProps[]) => void;
+  setTabs: (tabs: ITabItemProps[]) => void;
   setShowGraphics: (showGraphics: boolean) => void;
   setExpandSubMenu: (expandSubMenu: boolean) => void;
   setOpenDiagramTask: (openDiagramTask: boolean) => void;
   setUserInfo: (user?: User) => void;
 
-  // setFirstTaskInbox: (taskInbox?: INavRoute & { searchTag?: string }) => void;
+  setFirstTaskInbox: (taskInbox?: INavRoute & { searchTag?: string }) => void;
 
   logout: () => void;
 
   setCurrentAlert: (currentAlert?: IAlertContent) => void;
   setModalStatus: (status?: IModal) => void;
 
-  // setCurrentTab: (tab?: ITabItemProps) => void;
-  // setPrevTab: (tab?: ITabItemProps) => void;
+  setCurrentTab: (tab?: ITabItemProps) => void;
+  setPrevTab: (tab?: ITabItemProps) => void;
 
-  // deleteTabByUrl: (url: string) => void;
+  deleteTabByUrl: (url: string) => void;
 
   setCountErrorDashboard: (count: number) => void
   incrementCountErrorDashboard: () => void
@@ -84,11 +98,7 @@ const storeApi: StateCreator<IGeneralStore, [['zustand/devtools', never], ['zust
   countErrorDashboard: 0,
   // modalStatus: false,
 
-  // tabs: [
-  //   // { data: {}, title: "Bandeja de Tareas", url: "/dashboard/taskInbox", icon: Icons.Home },
-  //   // { data: {}, title: 'Bandeja de Tareas', url: '/dashboard/taskInbox', icon: 'Home' },
-  //   // { data: {}, title: "Configuracion", url: "/dashboard/settings", order: 2},
-  // ],
+  tabs: [],
 
   setIsOpenMenu: isOpen => {
     set(state => {
@@ -96,11 +106,11 @@ const storeApi: StateCreator<IGeneralStore, [['zustand/devtools', never], ['zust
     }, false, { type: "" });
   },
 
-  // setTabs: tabs => {
-  //   set(state => {
-  //     state.tabs = tabs;
-  //   });
-  // },
+  setTabs: tabs => {
+    set(state => {
+      state.tabs = tabs;
+    });
+  },
   setShowGraphics: showGraphics => {
     set(state => {
       state.showGraphics = showGraphics;
@@ -124,18 +134,18 @@ const storeApi: StateCreator<IGeneralStore, [['zustand/devtools', never], ['zust
       state.userInfo = user;
       state.currentAlert = undefined;
       state.openDiagramTask = false;
-      // state.tabs = [];
+      state.tabs = [];
     });
   },
 
   logout: () => {
     set(state => {
       state.userInfo = undefined;
-      // state.firstTaskInbox = undefined
-      // state.currentTab = undefined;
-      // state.prevTab = undefined;
-      // state.modalStatus = undefined;
-      // state.tabs = []
+      state.firstTaskInbox = undefined
+      state.currentTab = undefined;
+      state.prevTab = undefined;
+      state.modalStatus = undefined;
+      state.tabs = []
     });
 
     // Cookies.remove(import.meta.env.VITE_USER_TOKEN);
@@ -157,33 +167,33 @@ const storeApi: StateCreator<IGeneralStore, [['zustand/devtools', never], ['zust
     });
   },
 
-  // setFirstTaskInbox: taskInbox => {
-  //   set(state => {
-  //     state.firstTaskInbox = taskInbox;
-  //   });
-  // },
+  setFirstTaskInbox: taskInbox => {
+    set(state => {
+      state.firstTaskInbox = taskInbox;
+    });
+  },
 
-  // setCurrentTab: tab => {
-  //   set(state => {
-  //     state.currentTab = tab
-  //   })
-  // },
+  setCurrentTab: tab => {
+    set(state => {
+      state.currentTab = tab
+    })
+  },
 
-  // setPrevTab: tab => {
-  //   set(state => {
-  //     state.prevTab = tab
-  //   })
-  // },
+  setPrevTab: tab => {
+    set(state => {
+      state.prevTab = tab
+    })
+  },
 
-  // deleteTabByUrl: url => {
-  //   const newTabs = get().tabs.filter(item => item.url !== url)
+  deleteTabByUrl: url => {
+    const newTabs = get().tabs.filter(item => item.url !== url)
 
-  //   set(state => {
-  //     state.tabs = newTabs
+    set(state => {
+      state.tabs = newTabs
 
-  //   })
+    })
 
-  // },
+  },
 
   setCountErrorDashboard: count => {
     set(state => {

@@ -73,7 +73,7 @@ export const PieChartByDefinitionKey = ({ data }: IPieChartByDefinitionKeyProps)
     value: value,
   }));
 
-  if (!data) return <div className="loader h-80 w-full"></div>;
+  if (!data) return <div className="loader h-80 w-full rounded-md"></div>;
 
   return (
     <div className="relative h-full max-h-[300px]  w-full">

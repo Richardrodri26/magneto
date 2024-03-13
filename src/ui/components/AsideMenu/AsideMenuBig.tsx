@@ -4,17 +4,21 @@ import { motion } from 'framer-motion';
 import { useGeneral } from '@/stores';
 import { useClickOutside } from '@/hooks';
 import { X } from 'lucide-react';
+import { getRoutesByTypeOfUser } from '@/domain/routes.config';
+import { RenderIf } from '@/utils/components';
+import { AsideMenuItemBig } from './AsideMenuItemBig';
+import { AsideMenuSubItemBig } from './AsideMenuSubItemBig';
 
 export const AsideMenuBig = () => {
   const setIsMenuOpen = useGeneral(state => state.setIsOpenMenu);
   const ref = useClickOutside(() => { setIsMenuOpen(false) })
-  // const firstTaskInbox = useGeneral(state => state.firstTaskInbox);
+  const firstTaskInbox = useGeneral(state => state.firstTaskInbox);
 
   const [searchNavRoute, setSearchNavRoute] = useState<string>("");
 
-  // const navRoutesByUserType = getRoutesByTypeOfUser();
+  const navRoutesByUserType = getRoutesByTypeOfUser();
 
-  // const navRoutesToShow = searchNavRoute.length > 0 ? navRoutesByUserType.filter(navRoute => navRoute.title.toLocaleLowerCase().includes(searchNavRoute.toLocaleLowerCase())) : navRoutesByUserType
+  const navRoutesToShow = searchNavRoute.length > 0 ? navRoutesByUserType.filter(navRoute => navRoute.title.toLocaleLowerCase().includes(searchNavRoute.toLocaleLowerCase())) : navRoutesByUserType
 
   // 8: 33 - 8: 50
 
@@ -39,15 +43,14 @@ export const AsideMenuBig = () => {
 
       {/* MenuBigItem */}
 
-      {/* <RenderIf condition={Boolean(firstTaskInbox)}>
-        <AsideMenuItem {...firstTaskInbox!} />
-      </RenderIf> */}
+      <RenderIf condition={Boolean(firstTaskInbox)}>
+        <AsideMenuItemBig {...firstTaskInbox!} />
+      </RenderIf>
 
-      {/* {Boolean(firstTaskInbox) ? <AsideMenuItem {...firstTaskInbox!} /> : <AsideMenuItem icon='Inbox' title='Bandeja de tareas' url='/dashboard/taskInbox' />} */}
 
-      {/* {navRoutesToShow.map(route => (
-        <Fragment key={route.title}>{route.children ? <AsideMenuSubItem route={route} /> : <AsideMenuItem {...route} />}</Fragment>
-      ))} */}
+      {navRoutesToShow.map(route => (
+        <Fragment key={route.title}>{route.children ? <AsideMenuSubItemBig route={route} /> : <AsideMenuItemBig {...route} />}</Fragment>
+      ))}
 
      
     </>

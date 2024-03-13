@@ -1,7 +1,8 @@
 "use client"
 import { montserrat } from '@/config/fonts';
-import { useSignInMutation } from '@/remote/gql-generated';
-import { Button } from '@/ui/components';
+import { User, useSignInMutation } from '@/remote/gql-generated';
+import { useGeneral } from '@/stores';
+import { AsyncFormButton, Button } from '@/ui/components';
 import { BasicFormProvider } from '@/ui/composables/FormProvider';
 import { InputForm } from '@/ui/composables/FormRegister';
 import { setCookie } from 'cookies-next';
@@ -23,7 +24,8 @@ const loginSchema = z.object({
 type loginSchemaType = z.infer<typeof loginSchema>;
 
 export const LoginForm = () => {
-  const { mutateAsync } = useSignInMutation({
+  const setUserInfo = useGeneral(state => state.setUserInfo)
+  const { mutateAsync, isPending } = useSignInMutation({
     mutationKey: ['login']
   })
   const router = useRouter()
@@ -46,6 +48,7 @@ export const LoginForm = () => {
       if (resMutation?.signIn?.token) {
         setCookie(process.env.NEXT_PUBLIC_USER_TOKEN!, resMutation?.signIn?.token,)
       }
+      setUserInfo(resMutation?.signIn?.user as User)
 
       router.push('/inbox')
 
@@ -72,9 +75,9 @@ export const LoginForm = () => {
         </div>
 
         <div className='flex flex-col gap-4'>
-          <Button type='submit' className='w-64 h-10' variant={'secondary'}>
+          <AsyncFormButton isLoading={isPending} type='submit' className='w-64 h-10' variant={'secondary'}>
             Continuar
-          </Button>
+          </AsyncFormButton>
 
           <Button type='submit' className='w-64 h-10' variant={'ghost'}>
             Recuperar Contraseña
