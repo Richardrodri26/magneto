@@ -10,7 +10,7 @@ const InboxPage = async () => {
   const userTaskTrays = await serverFetch(useMyUserTaskTraysQuery);
 
   if((userTaskTrays?.myUserTaskTrays || []).length > 0) {
-    redirect(`/inbox/${userTaskTrays?.myUserTaskTrays[0].definitionKey}`)
+    redirect(`/dashboard/inbox/${userTaskTrays?.myUserTaskTrays[0].definitionKey}`)
   } else {
 
     return <>No hay bandejas</>

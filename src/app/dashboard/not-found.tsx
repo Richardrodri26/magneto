@@ -1,7 +1,7 @@
 import { TypewriterEffect } from '@/ui/components';
 import React from 'react'
 
-const NotFound = () => {
+export default function() {
     const words = [
         {
           text: 'Pagina',
@@ -24,5 +24,3 @@ const NotFound = () => {
         </div>
       );
 }
-
-export default NotFound

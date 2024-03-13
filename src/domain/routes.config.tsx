@@ -17,12 +17,12 @@ export const NavRoutes: INavRoute[] = [
   //   icon: 'Inbox',
   // },
   {
-    url: '/reports',
+    url: '/dashboard/reports',
     title: 'Reportes',
     icon: 'Summarize',
   },
   {
-    url: '/processManagement',
+    url: '/dashboard/processManagement',
     title: 'Gestión de Procesos',
     icon: 'AccountTree',
   },
@@ -32,17 +32,17 @@ export const NavRoutes: INavRoute[] = [
   //     icon: <Icons.Settings />
   // },
   {
-    url: '/settings/',
+    url: '/dashboard/settings/',
     title: 'Configuración',
     icon: 'Settings',
     children: [
       {
-        url: '/settings/users',
+        url: '/dashboard/settings/users',
         title: 'Usuarios',
         icon: 'Settings',
       },
       {
-        url: '/settings/processDefinitions',
+        url: '/dashboard/settings/processDefinitions',
         title: 'Process Definitions',
         icon: 'Settings',
       },
@@ -52,7 +52,7 @@ export const NavRoutes: INavRoute[] = [
         icon: 'Settings',
       },
       {
-        url: '/settings/processInstances',
+        url: '/dashboard/settings/processInstances',
         title: 'Process Instances',
         icon: 'Settings',
       },
@@ -62,7 +62,7 @@ export const NavRoutes: INavRoute[] = [
         icon: 'Inbox',
       },
       {
-        url: '/settings/notificationProfile',
+        url: '/dashboard/settings/notificationProfile',
         title: 'Perfiles de Mensajeria',
         icon: 'Settings'
       }

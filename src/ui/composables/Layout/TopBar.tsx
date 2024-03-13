@@ -21,7 +21,7 @@ export const TopBar = () => {
     <div style={{ gridArea: "header" }} className=' w-full min-h-12 px-10 py-3 bg-zinc-800 justify-between items-center flex text-white'>
       <div className='flex items-center gap-5 min-h-[21px] divide-x'>
         {/* <p onClick={openModal} className='text-2xl font-semibold leading-snug'>MAGNETO BPM</p> */}
-        <Link href={"/inbox"} className='text-2xl font-semibold leading-snug'>MAGNETO BPM</Link>
+        <Link href={"/dashboard/inbox"} className='text-2xl font-semibold leading-snug'>MAGNETO BPM</Link>
 
         <div className='pl-4 text-sm font-medium leading-snug flex gap-2 items-center'>
           {' '}

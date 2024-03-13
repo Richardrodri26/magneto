@@ -50,7 +50,7 @@ export const LoginForm = () => {
       }
       setUserInfo(resMutation?.signIn?.user as User)
 
-      router.push('/inbox')
+      router.push('/dashboard/inbox')
 
     } catch (error) {
       console.error("Error", error)

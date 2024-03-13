@@ -35,7 +35,7 @@ export const AsideMenuSmall = () => {
             menuOption={{
               data: {},
               title: "Bandeja de Tareas",
-              url: "/dashboard/taskInbox",
+              url: "/dashboard/inbox",
               icon: "Inbox",
               // searchTag: ""
             }}

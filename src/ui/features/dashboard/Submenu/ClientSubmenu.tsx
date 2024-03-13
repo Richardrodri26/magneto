@@ -17,7 +17,7 @@ export const SubmenuTaskInbox = () => {
 
           {
             data?.myUserTaskTrays.map((taskTray, index) => (
-              <Link key={index} href={`/inbox/${taskTray.definitionKey}`}>
+              <Link key={index} href={`/dashboard/inbox/${taskTray.definitionKey}`}>
                 {taskTray.shortTitle}
               </Link>
             ))
