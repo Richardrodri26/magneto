@@ -39,7 +39,7 @@ const AuthLayout = ({ children }: IAuthLayoutProps) => {
             </p>
 
             {/* <img src="/LottieMagneto.gif" alt="magneto_logo" className='mb-2.5' /> */}
-            <Image src="/magneto.svg" alt="magneto_logo" className="mb-2.5"  />
+            <Image height={38} width={492} src="/magneto.svg" alt="magneto_logo" className="mb-2.5"  />
             <p className={`text-center text-zinc-800 text-xl font-medium leading-loose ${montserrat.className}`}>
               (Middleware para Arquitecturas de Gestión y Navegación Empresarial
               y Tecnológica Orquestada)

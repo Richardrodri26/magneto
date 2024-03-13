@@ -3,6 +3,7 @@ import "./globals.css";
 import { workSans } from "@/config/fonts";
 import Providers from "@/ui/components/Providers";
 import { Toaster } from "@/ui/components";
+import { GeneralModals } from "@/ui/features/general/modals";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,6 +20,7 @@ export default function RootLayout({
       <body className={`${workSans.className} antialiased util__scroll`}>
         <Providers>{children}</Providers>
         <Toaster />
+        <GeneralModals />
       </body>
     </html>
   );

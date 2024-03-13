@@ -1,12 +1,12 @@
 "use client";
-
+import { useGeneral } from "@/stores";
 import Image from "next/image";
 import Link from "next/link";
 
 export const TopBar = () => {
   // const userInfo = useGeneral(state => state.userInfo)
   // const logout = useGeneral(state => state.logout)
-  // const setModalStatus = useGeneral(state => state.setModalStatus)
+  const setModalStatus = useGeneral(state => state.setModalStatus)
   // const { t, i18n } = useTranslation()
 
   // const changeLanguage = (lng: string) => {
@@ -27,7 +27,7 @@ export const TopBar = () => {
           {' '}
 
           <div className='p-1 rounded-full bg-white'>
-          <Image className='w-7 h-7 rounded-ful' src='/neiva_iconpng.png' alt='entidad' />
+          <Image width={28} height={28} className='w-7 h-7 rounded-ful' src='/neiva_iconpng.png' alt='entidad' />
           </div>
            {/* {userInfo?.organization?.name} */}
            Usuario

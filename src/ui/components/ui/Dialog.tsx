@@ -4,7 +4,8 @@ import * as React from "react"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 
 import { cn } from "@/lib/utils"
-import { CrossIcon } from "lucide-react"
+import { CrossIcon, X } from "lucide-react"
+import { RenderIf } from "@/utils/components"
 
 const Dialog = DialogPrimitive.Root
 
@@ -13,6 +14,11 @@ const DialogTrigger = DialogPrimitive.Trigger
 const DialogPortal = DialogPrimitive.Portal
 
 const DialogClose = DialogPrimitive.Close
+
+interface DialogHeader extends React.HTMLAttributes<HTMLDivElement> {
+  showCloseIcon?: boolean;
+  closeModal: () => void;
+}
 
 const DialogOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
@@ -55,15 +61,24 @@ DialogContent.displayName = DialogPrimitive.Content.displayName
 
 const DialogHeader = ({
   className,
+  children,
+  closeModal,
+  showCloseIcon = true,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
+}: DialogHeader) => (
   <div
     className={cn(
       "flex flex-col space-y-1.5 text-center sm:text-left",
       className
     )}
     {...props}
-  />
+  >
+    { children }
+
+    <RenderIf condition={showCloseIcon}>
+      <X onClick={closeModal} className="cursor-pointer fill-stroke-dark" />
+    </RenderIf>
+  </div>
 )
 DialogHeader.displayName = "DialogHeader"
 
