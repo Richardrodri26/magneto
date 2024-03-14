@@ -65,3 +65,6 @@ export function shallowEqual(a: any, b: any) {
 
   return true;
 }
+
+
+export const delay = (ms: number) => new Promise(res => setTimeout(res, ms));

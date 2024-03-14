@@ -1,0 +1,25 @@
+
+.table__wrapper::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.table__wrapper::-webkit-scrollbar-track {
+    margin: 5px;
+    border-radius: 8px;
+    /*--- custome ---*/
+    background: var(--component_bg, white);
+    /* @apply bg-primary */
+}
+
+.table__wrapper::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    /* background: var(--scroll); */
+    border-radius: 8px;
+    @apply bg-magneto-primary-purple
+}
+
+.table__wrapper::-webkit-scrollbar-thumb:hover {
+    /* background: var(--scroll_hover); */
+    @apply bg-magneto-primary-purple/70
+}

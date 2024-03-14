@@ -1,4 +1,5 @@
 import { ServerLineChart, ServerSideCalendarTasks, ServerSidePieChart } from '@/ui/features'
+import { ManagementTask } from '@/ui/features/dashboard/Tasks'
 import React, { Suspense } from 'react'
 
 interface Props {
@@ -30,6 +31,8 @@ const InboxByDefinitionKey = ({ params }: Props) => {
           <ServerSideCalendarTasks definitionKey={definitionKey} />
         </Suspense>
       </div>
+
+      <ManagementTask showGraphics={false} />
 
     </div>
   )

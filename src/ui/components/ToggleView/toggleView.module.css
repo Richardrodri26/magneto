@@ -1,0 +1,29 @@
+
+
+.toggle__container {
+    padding: 4px;
+    cursor: pointer;
+    margin: auto;
+    height: fit-content;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    border: 1px solid #BABABA;
+    border-radius: 21px;
+}
+
+.toggle__container>div {
+    border-radius: 21px;
+    padding-block: 8px 8px;
+    padding-inline: 8px;
+}
+
+.toggle__container>div[data-true="true"] {
+    /* background-color: var(--main_color); */
+    background-color: #404040;
+    transition: background-color 300ms ease-in-out;
+}
+
+.toggle__container>div[data-true="true"] svg path {
+    fill: white;
+}

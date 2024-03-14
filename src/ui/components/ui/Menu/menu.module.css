@@ -1,0 +1,31 @@
+.menu__inner {
+    box-shadow: 0 1px 4px rgb(0 0 0 / 12%), 0 1px 6px rgb(0 0 0 / 24%);
+    padding: 0 !important;
+}
+
+.menu__item {
+    @apply flex justify-start items-center px-2.5 gap-2 font-normal text-sm bg-white py-0
+}
+
+.menu__item__table {
+    @apply flex justify-start items-center px-2.5 gap-2 font-normal text-sm bg-stone-200 py-0 last:rounded-b-md cursor-pointer
+}
+
+.menu__item__table:nth-child(2) {
+    @apply rounded-t-md
+}
+
+.menu__action__list {
+    /* background-color: #E4E2DF !important; */
+    border-radius: 5px;
+    padding-block: 0px !important;
+    box-shadow: 0 1px 4px rgb(0 0 0 / 12%), 0 1px 6px rgb(0 0 0 / 24%);
+    z-index: 2;
+
+    /* @apply disabled:bg-[#F2F2F2] */
+    @apply !bg-stone-200
+}
+
+.menu__action__list:disabled:has(svg, path) {
+    /* @apply _fill-secondaryDisabled; */
+}

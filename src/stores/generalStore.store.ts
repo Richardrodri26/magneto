@@ -1,6 +1,7 @@
 "use client"
 import { INavRoute } from '@/domain/routes.config';
 import { User } from '@/remote/gql-generated';
+import { useRouter } from 'next/navigation';
 import { create, StateCreator } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer'
@@ -241,92 +242,85 @@ export const getter = useGeneral.getState;
 //   return getter().tabs.find(tab => !existing.has(tab));
 // }
 
-// export const useNavigationTabs = () => {
-//   const navigate = useNavigate();
-//   const currentTabs = getter().tabs;
-//   const firstTaskInbox = getter().firstTaskInbox;
-//   const setTabs = getter().setTabs;
-//   const setCurrentTab = getter().setCurrentTab;
-//   const currentTab = getter().currentTab;
-//   const prevTab = getter().prevTab;
-//   const setPrevTab = getter().setPrevTab;
-//   const defaultTab = { url: "/dashboard/taskInbox", title: "Bandeja de Tareas", searchTag: undefined, data: {} }
+export const useNavigationTabs = () => {
+  const router = useRouter()
+  const currentTabs = getter().tabs;
+  const firstTaskInbox = getter().firstTaskInbox;
+  const setTabs = getter().setTabs;
+  const setCurrentTab = getter().setCurrentTab;
+  const currentTab = getter().currentTab;
+  const prevTab = getter().prevTab;
+  const setPrevTab = getter().setPrevTab;
+  const defaultTab = { url: "/dashboard/taskInbox", title: "Bandeja de Tareas", searchTag: undefined, data: {} }
 
-//   const openTab = (tabToOpen: ITabItemProps) => {
-//     const hasOpenedSameTab = currentTabs.find(tab => tab.url === tabToOpen.url);
+  const openTab = (tabToOpen: ITabItemProps) => {
+    const hasOpenedSameTab = currentTabs.find(tab => tab.url === tabToOpen.url);
 
-//     if (!hasOpenedSameTab) {
-//       setTabs([...currentTabs, { ...tabToOpen, order: (currentTabs?.at(-1)?.order || 1) + 1 }]);
-//     }
+    if (!hasOpenedSameTab) {
+      setTabs([...currentTabs, { ...tabToOpen }]);
+    }
 
-//     if (currentTab) {
-//       setPrevTab(currentTab)
-//     }
+    if (currentTab) {
+      setPrevTab(currentTab)
+    }
 
-//     navigate({ to: tabToOpen.url, search: { filterBy: tabToOpen?.searchTag } });
-//     setCurrentTab(tabToOpen)
-
-
-//   };
-
-//   const closeTab = (tabToClose: ITabItemProps) => {
-//     const tabsToSave = (currentTabs || []).filter(tab => (tab.url !== tabToClose.url || tab.title !== tabToClose.title));
-//     const lastTab = tabsToSave.at(-1)
-
-//     if (currentTabs.length == 1) return;
-
-//     if (tabToClose.url.includes('/dashboard/trays')) return;
-
-//     const hasPrevTabInCurrentTabs = currentTabs.find((tab) => tab.title === prevTab?.title && tab.url === prevTab?.url)
+    router.push(`/${tabToOpen.url}/${tabToOpen?.searchTag}`);
+    setCurrentTab(tabToOpen)
 
 
-//     if (prevTab && hasPrevTabInCurrentTabs) {
-//       const tabToNavigate = tabToClose.url === prevTab.url ? (lastTab || defaultTab) : prevTab
-//       navigate({ to: tabToNavigate.url, search: { filterBy: tabToNavigate?.searchTag } });
+  };
 
-//       setTabs(tabsToSave);
-//       setPrevTab(undefined)
-//       setCurrentTab(tabToNavigate)
+  const closeTab = (tabToClose: ITabItemProps) => {
+    const tabsToSave = (currentTabs || []).filter(tab => (tab.url !== tabToClose.url || tab.title !== tabToClose.title));
+    const lastTab = tabsToSave.at(-1)
 
-//       return
+    if (currentTabs.length == 1) return;
 
-//     };
+    if (tabToClose.url.includes('/dashboard/trays')) return;
 
-//     if (lastTab) {
+    const hasPrevTabInCurrentTabs = currentTabs.find((tab) => tab.title === prevTab?.title && tab.url === prevTab?.url)
 
 
-//       navigate({ to: lastTab.url, search: { filterBy: lastTab?.searchTag } });
+    if (prevTab && hasPrevTabInCurrentTabs) {
+      const tabToNavigate = tabToClose.url === prevTab.url ? (lastTab || defaultTab) : prevTab
+      router.push(`/${tabToNavigate?.url}/${tabToNavigate?.searchTag}`);
 
-//       setCurrentTab(lastTab)
-//       setTabs(tabsToSave);
+      setTabs(tabsToSave);
+      setPrevTab(undefined)
+      setCurrentTab(tabToNavigate)
 
-//       return
+      return
 
-//     }
+    };
+
+    if (lastTab) {
 
 
+      router.push(`/${lastTab?.url}/${lastTab?.searchTag}`);
 
-//     // console.log("Redireccion")
-//     // navigate({ to: '/dashboard/taskInbox' });
-//     // console.log('`${firstTaskInbox?.searchTag}`', `${firstTaskInbox?.searchTag}`)
+      setCurrentTab(lastTab)
+      setTabs(tabsToSave);
 
-//     navigate({ to: firstTaskInbox?.url, search: { filterBy: `${firstTaskInbox?.searchTag}` } });
-//     // router.navigate({ to: "/dashboard", replace: true })
-//     setTabs(tabsToSave);
-//   };
+      return
 
-//   const closeCurrentTab = () => {
-//     if (currentTab) {
-//       closeTab(currentTab)
-//     }
-//   }
+    }
 
-//   return {
-//     openTab,
-//     closeTab,
-//     closeCurrentTab
-//   };
-// };
+    router.push(`/${firstTaskInbox?.url}/${firstTaskInbox?.searchTag}`);
+    setTabs(tabsToSave);
+  };
+
+  const closeCurrentTab = () => {
+    if (currentTab) {
+      closeTab(currentTab)
+    }
+  }
+
+  return {
+    openTab,
+    closeTab,
+    closeCurrentTab
+  };
+};
 
 // export const fireAlert = async (alert?: IAlertContent) => {
 //     setter((state) => state.currentAlert = alert)

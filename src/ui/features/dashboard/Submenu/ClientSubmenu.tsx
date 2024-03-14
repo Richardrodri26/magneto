@@ -2,11 +2,25 @@
 
 import { cn } from "@/lib/utils";
 import { useMyUserTaskTraysQuery } from "@/remote/gql-generated";
+import { useGeneral } from "@/stores";
 import { ChevronRightCircle } from "lucide-react";
 import Link from "next/link";
+import { useEffect } from "react";
 
 export const SubmenuTaskInbox = () => {
   const { data } = useMyUserTaskTraysQuery()
+  const setTabs = useGeneral(state => state.setTabs)
+  const tabs = useGeneral(state => state.tabs);
+
+  useEffect(() => {
+    if(tabs.length === 0) {
+      setTabs([{
+        data: {},
+        title: "Bandeja de Tareas",
+        url: `dashboard/inbox/${data?.myUserTaskTrays[0].definitionKey}?filterBy=${data?.myUserTaskTrays[0].id}`
+      }])
+    }
+  }, [])
 
   return (
     <div

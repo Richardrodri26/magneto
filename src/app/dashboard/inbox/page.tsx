@@ -1,10 +1,7 @@
 import { useMyUserTaskTraysQuery } from '@/remote/gql-generated'
 import { serverFetch } from '@/remote/query-utils'
-import { ServerSideCalendarTasks } from '@/ui/features/dashboard/Calendar'
-import { ServerLineChart } from '@/ui/features/dashboard/LineChart'
-import { ServerSidePieChart } from '@/ui/features/dashboard/PieChart'
 import { redirect } from 'next/navigation'
-import React, { Suspense } from 'react'
+import React from 'react'
 
 const InboxPage = async () => {
   const userTaskTrays = await serverFetch(useMyUserTaskTraysQuery);

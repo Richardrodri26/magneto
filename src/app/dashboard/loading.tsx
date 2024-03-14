@@ -11,7 +11,7 @@ export default function Loading() {
             minHeight: 'calc(90vh - 112px)',
             paddingLeft: 1,
           }}
-          className='loader rounded-md'
+          className='loader rounded-md mt-5'
         />
 
         <div className='flex w-full flex-col pb-5 '>
